@@ -1,0 +1,54 @@
+import {
+    ApolloClient,
+    ApolloLink,
+    DefaultOptions,
+    HttpLink,
+    InMemoryCache,
+    from,
+} from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
+
+const defaultOptions: DefaultOptions = {
+    watchQuery: {
+        fetchPolicy: "no-cache",
+        errorPolicy: "ignore",
+    },
+    query: {
+        fetchPolicy: "no-cache",
+        errorPolicy: "all",
+    },
+};
+const errorLink = onError(({ graphQLErrors, networkError, response }) => {
+    if (graphQLErrors) {
+        graphQLErrors.forEach(({ message, locations, path }) =>
+            console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            ),
+        );
+    }
+    if (response) console.log(`[Response error]: ${response}`);
+
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+const authMiddleware = new ApolloLink((operation, forward) => {
+    // add the authorization to the headers
+    // operation.setContext(({ headers = {} }) => ({
+    //     headers: {
+    //         ...headers,
+    //         authorization: localStorage.getItem("token") || null,
+    //     },
+    // }));
+    return forward(operation);
+});
+
+const httpLink = new HttpLink({
+    uri: process.env.GQL_API_URL,
+    // fetchOptions: {
+    //      mode: "no-cors",
+    // },
+});
+export const client = new ApolloClient({
+    link: from([errorLink, httpLink]),
+    cache: new InMemoryCache(),
+    defaultOptions,
+});

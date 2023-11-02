@@ -1,8 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import { ReduxProvider } from "./store/reduxProviders";
 
 export const metadata: Metadata = {
     title: "Mindy",
@@ -15,10 +13,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
-            <body className={inter.className}>
-                <main className="container mx-auto mt-4 px-6 md:mt-8">{children}</main>
-            </body>
-        </html>
+        <ReduxProvider>
+            <html lang="en">
+                <body className="font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400">
+                    <div className="flex h-screen overflow-hidden">{children}</div>
+                </body>
+            </html>
+        </ReduxProvider>
     );
 }

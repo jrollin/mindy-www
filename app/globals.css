@@ -25,3 +25,17 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+@layer components {
+  .title {
+    @apply text-white text-xl mt-5;
+  }
+
+  .application {
+    @apply flex flex-col gap-8 p-8 mx-auto lg:max-w-4xl;
+  }
+
+  .side-panel {
+    @apply flex flex-col gap-16 sm:w-1/4;
+  }
+}

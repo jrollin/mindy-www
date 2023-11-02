@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+    reactStrictMode: true,
+    env: {
+        GQL_API_URL: process.env.GQL_API_URL,
+    },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
