@@ -7,6 +7,7 @@ import {
     from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import https from "https";
 
 const defaultOptions: DefaultOptions = {
     watchQuery: {
@@ -43,9 +44,9 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 
 const httpLink = new HttpLink({
     uri: process.env.GQL_API_URL,
-    // fetchOptions: {
-    //      mode: "no-cors",
-    // },
+    fetchOptions: {
+        agent: new https.Agent({ rejectUnauthorized: false }),
+    },
 });
 export const client = new ApolloClient({
     link: from([errorLink, httpLink]),
