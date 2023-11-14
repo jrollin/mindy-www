@@ -6,5 +6,11 @@ Interface to my project Mindy API
 
 ## Stack
 
-- NextJS app
+- react
+- Typescript
+- vite
+
+- redux toolkit
+- jest
+
 - graphql client
