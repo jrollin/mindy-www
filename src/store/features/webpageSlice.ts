@@ -4,16 +4,23 @@ import { getAllWebpages } from '@usecases/webpages/getAllWebpages';
 import { Webpage } from '@domains/Webpage';
 import { findWebpageById } from '@usecases/webpages/findWebpageById';
 
+export enum LoadingState {
+    IDLE = 'idle',
+    PENDING = 'pending',
+    SUCCEEDED = 'succeeded',
+    FAILED = 'failed',
+}
+
 export type WebpagesState = {
     webpages: Webpage[];
-    loading?: boolean;
+    loading: LoadingState;
     detail: Webpage | null;
     error?: string | null;
 };
 const initialState: WebpagesState = {
     webpages: [],
     detail: null,
-    loading: false,
+    loading: LoadingState.IDLE,
     error: null,
 };
 
@@ -60,30 +67,30 @@ const webpagesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchWebpages.pending, (state, _action) => {
-            state.loading = true;
+            state.loading = LoadingState.PENDING;
             state.error = null;
         });
         builder.addCase(fetchWebpages.fulfilled, (state, action) => {
             state.webpages = action.payload;
-            state.loading = false;
+            state.loading = LoadingState.SUCCEEDED;
             state.error = null;
         });
         builder.addCase(fetchWebpages.rejected, (state, action) => {
-            state.loading = false;
+            state.loading = LoadingState.FAILED;
             state.error = action.error.message;
         });
         // detail
         builder.addCase(fetchWebpageDetail.pending, (state, _action) => {
-            state.loading = true;
+            state.loading = LoadingState.PENDING;
             state.error = null;
         });
         builder.addCase(fetchWebpageDetail.fulfilled, (state, action) => {
             state.detail = action.payload;
-            state.loading = false;
+            state.loading = LoadingState.SUCCEEDED;
             state.error = null;
         });
         builder.addCase(fetchWebpageDetail.rejected, (state, action) => {
-            state.loading = false;
+            state.loading = LoadingState.FAILED;
             state.error = action.error.message;
         });
     },

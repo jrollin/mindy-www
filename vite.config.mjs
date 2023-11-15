@@ -16,7 +16,7 @@ export default defineConfig(({ command, mode }) => {
         },
         plugins: [react(), nodePolyfills()],
         define: {
-            VITE_API_URL: env.VITE_API_URL,
+            VITE_API_URL: JSON.stringify(env.VITE_API_URL),
         },
     };
 });

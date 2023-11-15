@@ -7,14 +7,14 @@ export const useAppSelector: TypedUseSelectorHook<ApplicationState> =
 // easier usage
 export const useWebpages = () => {
     const webpages = useAppSelector((state) => state.webpages.webpages);
-    const loading = useAppSelector((state) => !!state.webpages.loading);
+    const loading = useAppSelector((state) => state.webpages.loading);
     const error = useAppSelector((state) => state.webpages.error);
     return [webpages, loading, error] as const;
 };
 
 export const useWebpage = () => {
     const webpage = useAppSelector((state) => state.webpages.detail);
-    const loading = useAppSelector((state) => !!state.webpages.loading);
+    const loading = useAppSelector((state) => state.webpages.loading);
     const error = useAppSelector((state) => state.webpages.error);
     return [webpage, loading, error] as const;
 };

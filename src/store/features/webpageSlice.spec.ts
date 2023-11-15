@@ -1,5 +1,10 @@
 import { describe } from 'node:test';
-import { addWebpage, buildWebpage, webpagesReducer } from './webpageSlice';
+import {
+    LoadingState,
+    addWebpage,
+    buildWebpage,
+    webpagesReducer,
+} from './webpageSlice';
 
 describe('WebpagesSlice', () => {
     const initialState = {
@@ -8,7 +13,7 @@ describe('WebpagesSlice', () => {
             buildWebpage({ title: 'second', content: 'contentB' }),
         ],
         detail: null,
-        loading: false,
+        loading: LoadingState.IDLE,
         error: null,
     };
     it('reducers', () => {
